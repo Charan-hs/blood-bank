@@ -1,0 +1,245 @@
+<%- include('header'); -%>
+<body>
+  <%- include('nav'); -%>
+    <section id="home">
+        <div class="home-body">
+            <img class="bg-img"  src="./img/bg.jpg"/>
+            <div class="bg-over">
+
+                <div class="container pt-lg-4">
+                    <div class="row make-di">
+                        <div class="col-lg-6">
+                           <div class="row center mt-lg-5">
+                            <div class="mt-2 mt-lg-5"><h1 class="main-text">
+                                <em class="font-big">Donate Blood</em> <br /> give the gift of Life 
+                            </h1>
+                            <h4 class="mt-lg-5 d-none d-md-block">Register as Donar </h4>
+                            <a href="/register" class="btn  ml-lg-5 mt-2 btn-outline-light"  >
+                                Register
+                            </a>
+                            </div>
+                           </div>
+                        </div>
+                        <div class="col-lg-6 mt-lg-5 ">
+                            <form action="/find" method="POST">
+                                <div class="container body-cont mt-2 mt-lg-5 ">
+                                    <div class="row">
+                                      <div class="col-md-6">
+                                          <p class="mb-0">Name:</p>
+                                          <div class="in-con">
+                                           
+                                            <input placeholder="Name" name="name"  required class="input-field" />
+                                          </div>
+                                       
+                                      </div>
+                                      <div class="col-md-6">
+                                        <p class="mb-0">Phone Number:</p>
+                                            <div class="in-con">
+                                    
+                                                <input placeholder="Phone Number" required name="phone" type="number" minlength="10" maxlength="10" class="input-field" />
+                                              </div>
+                                      </div>
+                                    </div>
+                                    <div class="row">
+                                      <div class="col-md-6">
+                                          <p class="mb-0">Blood Group:</p>
+                                        <div class="input-group mb-3">
+                                            <select class="custom-select in-con blood-dropdown" required name="blood" id="inputGroupSelect01">
+                                              
+                                              <% blood1.map((value,index) => { %>
+                                                <option value=<%= value.name%> name="blood" class="ba-option" ><%= value.name%></option>
+                                           <% } ) %>
+                                            </select>
+                                          </div>
+                                       
+                                      </div>
+                                      <div class="col-md-6">
+                                        <p class="mb-0">Pincode:</p>
+                                            <div class="in-con">
+                                                <i class="fa fa-map-marker" aria-hidden="true" style="font-size: 18px;"></i>
+                                                <input placeholder="Pincode" required name="pincode" type="number" class="input-field" />
+                                              </div>
+                                      </div>
+                                    </div>
+                              
+                                    <div class="row">
+                                        <div class="col"></div>
+                                        <div class="col">
+                                            <button type="submit" class="btn text-light  mt-2 btn-outline-danger "  >
+                                                Find Blood
+                                            </button>
+                                        </div>
+                                    </div>
+                                  </div>
+                                
+                            
+                            </form>
+                        </div>
+                    </div>
+                </div>
+     
+            </div>
+        </div>
+    </section>
+<div class="bg-home">
+
+
+    <section id="features">
+        <div class="container pt-5 mb-4">
+
+       
+        <div class="row">
+          <div class="feature-box col-lg-4">
+          
+            <i class="fa fa-university m-1"></i>
+            <div class="bank-count ">+</div>
+            <p>Blood Bank Registered.</p>
+          </div>
+  
+          <div class="feature-box col-lg-4">
+            <i class="fa fa-user-o mr-3" aria-hidden="true"></i>
+            <div class="bank-count1">+</div>
+            <p>Donar Registered.</p>
+          </div>
+  
+          <div class="feature-box col-lg-4">
+          
+            <svg aria-hidden="true" class="fa" focusable="false" style="width: 50px;" data-prefix="fa" data-icon="hospital-symbol" class="svg-inline--fa fa-hospital-symbol fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 0C114.6 0 0 114.6 0 256s114.6 256 256 256 256-114.6 256-256S397.4 0 256 0zm112 376c0 4.4-3.6 8-8 8h-48c-4.4 0-8-3.6-8-8v-88h-96v88c0 4.4-3.6 8-8 8h-48c-4.4 0-8-3.6-8-8V136c0-4.4 3.6-8 8-8h48c4.4 0 8 3.6 8 8v88h96v-88c0-4.4 3.6-8 8-8h48c4.4 0 8 3.6 8 8v240z"></path></svg>
+       
+            <div class="bank-count2">+</div>
+            <p>Hospital Registered.</p>
+          </div>
+        </div>
+    </div>
+      </section>
+
+
+<div class="container camp-con">
+  <% var im =  ["/img/11.jpg","/img/22.jpg","/img/33.jpg","/img/44.jpg","/img/55.jpg","/img/66.jpg"]%> 
+  <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+    <ol class="carousel-indicators">
+      <% if(campaign[0]){ %> 
+        <% for(var i = 0 ; i< campaign.length; i++){ %>
+          <li data-bs-target="#carouselExampleDark" data-bs-slide-to=<%= i %>  class=<%= (i===0?"active":"")  %> ></li>
+
+          <% } %> 
+        <% } %> 
+
+    </ol>
+    <% if(campaign[0]){ %> 
+      <div class="carousel-inner">
+      <% for(var i = 0 ; i< campaign.length; i++){ %>
+        <div class='<%= (i===0?"carousel-item active":"carousel-item")  %>' data-bs-interval=<%= (i+1)*10000  %> >
+          <img src=<%= im[i]  %>  class="d-block w-100 bg-img-slide" alt=<%= im[i]  %>>
+       
+          <div class="carousel-caption d-none d-block">
+            <% var dateS = campaign[i].dateS%> 
+            <% var dateE = campaign[i].dateE%> 
+            <% var timeS = campaign[i].timeS%> 
+            <% var timeE = campaign[i].timeE%> 
+            <% if(dateS){ %> 
+             <% dateS = new Date(dateS).toLocaleDateString() %>
+             <% dateE = new Date(dateE).toLocaleDateString() %>
+             <% timeS = timeS.slice(0,5) %>
+             <% timeE = timeE.slice(0,5) %>
+            
+           <% }else { %>
+               <% dateS = "" %>
+             <% } %>
+
+            <h1 >
+              <%= campaign[i].name  %> 
+              <br>
+            </h1>
+            <p class="mb-0">
+              <%= campaign[i].email  %> 
+            </p>
+            <p class="mb-0">
+              Start Date: <%= dateS  %> -  End Date: <%= dateE  %> 
+            </p>
+          
+            <p class="mb-0">
+              Start Time:
+              <%= timeS  %>  - End Time:
+              <%= timeE  %> 
+            </p>
+            <p class="mb-0">
+              <%= campaign[i].address  %> 
+            </p>
+            <p >
+              <%= campaign[i].descp  %> 
+            </p>
+          </div>
+        </div>
+        <% } %> 
+      </div>
+        <% } %> 
+   
+    <a class="carousel-control-prev" href="#carouselExampleDark" role="button" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleDark" role="button" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </a>
+  </div>
+
+  </div>
+   
+    <section id="footer">
+        <div class="container">
+            <div class="row  ">
+                <div class="col-md-3 mt-3">
+                    <div class="call-info">
+                    <h3>Blood Bank</h3>
+                    <ul>
+                
+                        
+                               <li><i class="fas fa-phone-square-alt mr-2"></i> 123456789</li> 
+                              <li> <i class="fas mr-3 fa-map-marker-alt"></i>Mandya,India</li> 
+                           
+                        </li> 
+                       
+                    </ul>
+                </div>
+            </div>
+                <div class="col-md-6">
+                    <div class="social-list d-flex justify-content-center">
+                        <a href="#" class=""><i class="fa fa-facebook" style="font-size: 20px;"></i></a>
+                        <a href="#" class=""><i class="fa fa-twitter" style="font-size: 20px;"></i></a>
+                        <a href="#" class=""><i class="fa fa-globe" style="font-size: 20px;"></i></a>
+                        <a href="#" class=""><i class="fa fa-instagram" style="font-size: 20px;"></i></a>
+                        <a href="#" class=""><i class="fa fa-pinterest fa-fw" style="font-size: 20px;"></i></a> 
+                     </div>
+                </div>
+                <div class="col-md-3 mt-3">
+                    
+                    <div class="footer-left ">
+                    <div class="subscribe-box ">
+                          <form>
+                            
+                            <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+                          
+                            <button type="button" class="btn btn-outline-secondary my-3 ">Contact</button>
+                          </form>
+                    </div>
+                    
+                    </div>
+                </div>  
+            </div>
+        </div>
+        <div class="footer-down py-2">
+            <p>All rights are reserved @ 2020</p>
+        </div>
+    </section>  
+</body>
+<script src="/js/jquery-3.5.1.slim.min.js"></script>
+<script src="/js/bootstrap.min.js" ></script>
+<script src="/js/bootstrap.bundle.min.js" ></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+
+</html>
+
+

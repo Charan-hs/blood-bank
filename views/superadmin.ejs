@@ -1,0 +1,95 @@
+<%- include('header') -%> 
+<link rel="stylesheet" href="/css/superadmin.css">
+<body>
+
+    <%- include('nav'); -%>
+    <div class="container">
+        <div class="front-p mt-4   pb-0 pt-4 pr-4 pl-4 ">
+
+        
+        <div class="row ">
+                <h4>
+                    List of Hospitals
+                </h4>
+                <a href="/add/hospital" class="btn text-light  mt-2 btn-outline-danger ml-auto"  >
+                    Add Hospial
+                </a>
+        </div>
+        <div class="row mt-3">
+            <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">Sl.no</th>
+                    <th scope="col">Hospital Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone Number</th>
+                    <th scope="col text-center">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <% hospital.forEach((val,i) => { %>
+                        <tr>
+                        <th scope="row">  <%= i+1 %></th>
+                        <td><%= val.name %></td>
+                        <td><%= val.email %></td>
+                        <td><%= val.phone %></td>
+                        <td class="d-flex justify-content-around">
+                            <a class="fa fa-eye icon-view" aria-hidden="true" href=<%="/view/hospital/"+val.email%>></a>
+                            <a class="fa fa-pencil icon-edit" aria-hidden="true" href=<%="/edit/hospital/"+val.email%>></a>
+                            <a class="fa fa-trash-o icon-delete" aria-hidden="true" href=<%="/delete/hospital/"+val.email%>></a>
+                        </td>
+                    </tr>
+                   <% }) %>
+              
+                </tbody>
+              </table>
+        </div>
+    </div>
+        <div class="front-p mt-4   pb-0 pt-4 pr-4 pl-4">
+
+        
+        <div class="row ">
+                <h4>
+                    List of Blood Bank
+                </h4>
+                <a href="/add/bank/" class="btn text-light  mt-2 btn-outline-danger ml-auto" >
+                    Add Blood Bank
+                </a>
+        </div>
+        <div class="row mt-3">
+            <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">Sl.no</th>
+                    <th scope="col">Blood Bank Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone Number</th>
+                    <th scope="col">Address</th>
+                    <th scope="col text-center">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  
+                    <% bank.forEach((val,i) => { %>
+                        <tr >
+                        <th scope="row">  <%= i+1 %></th>
+                        <td><%= val.name %></td>
+                        <td><%= val.email %></td>
+                        <td><%= val.phone %></td>
+                        <td><%= val.address %></td>
+                        <td class="d-flex justify-content-around">
+                            <a class="fa fa-eye icon-view" aria-hidden="true" href=<%="/view/bank/"+val.email%>></a>
+                            <a class="fa fa-pencil icon-edit" aria-hidden="true" href=<%="/edit/bank/"+val.email%>></a>
+                            <a class="fa fa-trash-o icon-delete" aria-hidden="true" href=<%="/delete/bank/"+val.email%> ></a>
+                        </td>
+                    </tr>
+                   <% }) %>
+                
+              
+                </tbody>
+              </table>
+        </div>
+    </div>
+        
+    </div>
+</body>

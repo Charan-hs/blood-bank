@@ -1,0 +1,335 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+#home {
+    color: white;
+   
+}
+
+.home-body {
+    width: 100%;
+    height: 90vmin;
+    position: relative;
+}
+
+.bg-img {
+  width: 100%;
+  height: 100%;
+object-fit: cover;
+position: absolute;
+ z-index: -1;
+
+}
+
+.main-text {
+  font-size: calc(100% + 1vw + 1vh) !important;
+}
+
+.bg-over {
+    background: rgba(0, 0, 0, 0.267);
+    width: 100%;
+    height: 100%;
+}
+.card {
+    background: rgba(117, 117, 117, 0);
+    width: 400px
+}
+.list-group-item {
+    background: none;
+}
+
+.btn-white {
+    background: white;
+    margin-bottom: 13px;
+   
+}
+
+.col-6 {
+    padding: 10px;
+    
+}
+
+.body-cont {
+    width: 400px;
+    background: rgba(117, 117, 117, 0.346);
+    padding: 20px;
+    border-radius: 10px;
+    backdrop-filter: blur(30px);
+}
+
+.bg-camp{
+  background: rgba(63, 63, 63, 0.346);
+  border-radius: 10px;
+}
+
+
+
+.make-di {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+
+    width: 100%;
+    height: 100%;
+
+}
+
+
+
+.fa {
+    font-size: 3rem;
+    color: #f5f5f5;
+}
+
+
+ .bg-img-slide{
+  filter: blur(8px);
+  -webkit-filter: blur(8px);
+  object-fit: cover;
+  height: 400px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  
+ }
+
+ .camp-con {
+   border-radius: 20px;
+   overflow: hidden;
+ }
+
+ .carousel-caption {
+   top:50px;
+   backdrop-filter: blur(1px);
+   background: #4443432d;
+ }
+
+
+ .in-con {
+    background-color: #7e7e7e42;
+    width: 100%;  
+  border-radius: 5px;
+  border: 0.5px solid rgba(59, 59, 59, 0.698);
+  padding: 5px;
+  color: aliceblue ;
+}
+
+.blood-dropdown:focus{
+
+    background: none;
+    background-color: none;
+}
+.ba-option{
+    background: #0e0e0ea8 !important;
+}
+
+.input-field {
+    background: none;
+    border: none;
+    width: 90%;
+    color: aliceblue !important;
+    padding-left: 5px;
+}
+
+
+.input-field:focus {
+    border: none;   
+    outline: none;
+}
+.input-field:focus-visible {
+    border: none;   
+    background: none;
+}
+
+
+/* footer */
+
+.bg-home{
+    background-image: linear-gradient(360deg, #273036c4 10%, #D62E33 100%);
+    color: aliceblue;
+}
+#features {
+    color: aliceblue;
+}
+
+#footer
+{
+    background-color:#273036;
+    background-image: linear-gradient(180deg, #273036 10%, #D62E33 100%);
+    opacity: 0.9;
+    color: white;
+   
+}
+.call-info h3
+{
+    padding-bottom: 15px;
+}
+.social-list
+{
+    margin-top: 50px;
+   
+  margin-bottom: 50px;
+}
+#footer  .social-list a{
+    
+
+    color:rgb(252, 248, 248);
+    
+}
+
+#footer .social-list i{
+    margin-right: 10px;
+    border:1px solid #999;
+    width:40px;
+    height: 40px;
+    line-height: 42px;
+    text-align: center;
+}
+#footer .social-list i:hover{
+    color:#fff;
+    background-color: #D62E33;
+    border:1px solid #D62E33;
+}
+.call-info ul
+{
+  list-style: none;
+}
+.call-info ul .addres
+{
+  font-weight: bold;
+}
+.addres ul li
+{
+  font-weight: 400;
+}
+.call-info ul .addres::before
+{
+    content: "\25CB";  /* Add content: \2022 is the CSS Code/unicode for a bullet */
+    color: #EA4335; /* Change the color */
+    font-weight: bold; /* If you want it to be bold */
+    display: inline-block; /* Needed to add space between the bullet and the text */
+    width: -1em; /* Also needed for space (tweak if needed) */
+    margin-left: 1em; /* Also needed for space (tweak if needed) */
+}
+.subscribe-box
+{
+    margin: 0 auto;
+    background-color:#D62E33;
+    padding: 30px;
+    
+    border-radius: 5px;
+    
+}
+.btn-outline-secondary
+{
+    color: white;
+    border-color: white;
+    background-color: #D62E33;
+   margin-right: 50px;
+}
+.btn-outline-secondary:hover
+{ 
+    background-color: #fdfcfc;
+    border:1px solid #fcf9f9;
+    color: rgb(121, 122, 122);
+}
+
+input[type=text] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+.footer-down
+{
+
+  margin-bottom: 0px;
+  margin-top: 5rem;
+}
+.footer-down p
+{
+  margin-top: 0px;
+  margin-bottom: 0px;
+  
+  text-align: center;
+}
+
+/* .nav-bg-blur {
+    backdrop-filter: blur(30px);
+} */
+
+.feature-box{
+    text-align: center;
+}
+
+
+.bank-count::before {
+    font: 600 40px system-ui;
+    content: counter(count);
+    animation: counter 1s  ;
+    counter-reset: count 200;
+  }
+
+  .bank-count1::before {
+    font: 600 40px system-ui;
+    content: counter(count);
+    animation: counter 1s  ;
+    counter-reset: count 5000;
+  }
+  .bank-count2::before {
+    font: 600 40px system-ui;
+    content: counter(count);
+    animation: counter 1s  ;
+    counter-reset: count 1000;
+  }
+  
+  @keyframes counter {
+    0% {
+      counter-increment: count -200;
+    }
+    10% {
+      counter-increment: count -180;
+    }
+    20% {
+      counter-increment: count -160;
+    }
+    30% {
+      counter-increment: count -140;
+    }
+    40% {
+      counter-increment: count -120;
+    }
+    50% {
+      counter-increment: count -100;
+    }
+    60% {
+      counter-increment: count -80;
+    }
+    70% {
+      counter-increment: count -70;
+    }
+    80% {
+      counter-increment: count -50;
+    }
+    90% {
+      counter-increment: count -20;
+    }
+    100% {
+      counter-increment: count 0;
+    }
+  }
+
+  .bank-count,  .bank-count1,  .bank-count2 {
+    font: 600 40px system-ui;
+  }
+  

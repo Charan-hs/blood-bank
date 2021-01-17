@@ -1,0 +1,34 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100vw;
+    height: 100%;
+    background-color:#273036;
+    background-image: linear-gradient(360deg, #273036 10%, #D62E33 100%);
+    opacity: 0.9;
+ color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+p{
+    margin: 0;
+}
+.dull {
+    color: #e0e0e09b;
+}
+form {
+    display: inline;
+}
+.bg-red {
+    background: rgba(206, 206, 206, 0.192);
+    border-radius: 20px;
+    padding: 20px;
+  
+
+}

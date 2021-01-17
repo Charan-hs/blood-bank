@@ -1,0 +1,414 @@
+<%- include('header'); -%>
+<link rel="stylesheet" href="/css/profile.css">
+<link rel="stylesheet" href="/css/hospital.css">
+<body>
+  <%- include('nav'); -%>
+      <div class="container mt-4 ">
+        <div class="row front-p pb-2">
+          <div class="col-md-4 text-center d-flex justify-content-center flex-column align-items-center  ">
+            <img src="/img/avatar.png" class="rounded-circle" alt="profile">
+            
+            <div class="mt-3"><%= data.name %></div>
+          </div>
+          <div class="col-md-8">
+            <div class="row mt-5">
+              <div class="col-md-6">
+                <div class="color-light">Name</div>
+                <div class="ml-2"><%= data.name %></div>
+              </div>
+              <div class="col-md-6">
+                <div class="color-light">Email</div>
+                <div class="ml-2"><%= data.email %></div>
+              </div>
+            </div>
+        
+            <div class="row mt-3">
+              <div class="col-md-6">
+                <div class="color-light">Phone Number</div>
+                <div class="ml-2"><%= data.phone %></div>
+              </div>
+              <div class="col-md-6">
+                <div class="color-light">Pincode</div>
+                <div class="ml-2"><%= data.pincode %></div>
+              </div>
+            </div>
+            <div class="row mt-3 mb-3">
+              <div class="col-md-12 ">
+                <div class="color-light">Address</div>
+                <div class="ml-2"><%= data.address %></div>
+              </div>  
+            </div>
+          </div>
+        </div>
+        <form method="POST" action="/blood/<%=user.role %>/<%=data.email %>" >
+          <div class="row front-p pb-2 mt-4 pt-5 pr-3 pl-3 ">
+            <h5 class="">Blood Reserve </h5>
+
+          
+            <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col"></th>
+                    <th scope="col text-center">A+</th>
+                    <th scope="col text-center">A-</th>
+                    <th scope="col text-center">B+</th>
+                    <th scope="col text-center ">B-</th>
+                    <th scope="col text-center">AB+</th>
+                    <th scope="col text-center">AB-</th>
+                    <th scope="col text-center">O+</th>
+                    <th scope="col text-center ">O-</th>
+                  </tr>
+                </thead>
+                <tbody>
+            
+                        <tr>
+                            <th scope="col ">Number of Bottles</th>
+                            <th scope="col ">
+                              <input placeholder="A+"  name="A+" value='<%=reserve['A+'] %>' class="input-field " />
+                             </th>
+                            <th scope="col ">
+                              <input placeholder="A-"  name="A-" value='<%=reserve['A-'] %>' class="input-field " />
+                             </th>
+                            <th scope="col ">
+                              <input placeholder="B+"  name="B+" value='<%=reserve['B+'] %>' class="input-field " />
+                             </th>
+                            <th scope="col ">
+                              <input placeholder="B-"  name="B-" value='<%=reserve['B-'] %>' class="input-field " />
+                             </th>
+                            <th scope="col ">
+                              <input placeholder="AB+"  name="AB+" value='<%=reserve['AB+'] %>' class="input-field " />
+                             </th>
+                            <th scope="col ">
+                              <input placeholder="AB-"  name="AB-" value='<%=reserve['AB-'] %>' class="input-field " />
+                             </th>
+                             <th scope="col ">
+                              <input placeholder="O+"  name="O+" value='<%=reserve['O+'] %>' class="input-field " />
+                             </th>
+                            <th scope="col ">
+                              <input placeholder="O-"  name="O-" value='<%=reserve['O-'] %>' class="input-field " />
+                             </th>
+                          
+                    </tr>
+                    
+                    
+                  </tbody>
+                </table>
+                <button type="submit " name="button" value="update" class="btn ml-auto btn-outline-light mr-1 m-2 pl-4 pr-4">
+                  update
+                </button>
+              </div>
+              
+              
+            </form>
+            <% if(user.role === "hospital"){ %>
+              <form method="POST" action="/request/<%=user.role %>/<%=data.email %>">
+                  <div class="row front-p pb-2 mt-4 pt-5 pr-3 pl-3 mb-5">
+                    <%  if(errmsg){ %>
+                      <p class="errmsg"><%= errmsg %> </p>
+                   <%   }%> 
+                    <%  if(msg){ %>
+                      <p class="msg"><%= msg %> </p>
+                   <%   }%> 
+                      <div class="col-12">
+                        <h4>Request Blood From Blood Bank</h4>
+                      </div>
+                    <div class="col-lg-10 mt-2 wrap ml-3 mr-3 mt-2 mb-2 ">
+                      <table class="table table-striped">
+                        <thead>
+                          <tr>
+                          
+                            <th scope="col text-center">A+</th>
+                            <th scope="col text-center">A-</th>
+                            <th scope="col text-center">B+</th>
+                            <th scope="col text-center ">B-</th>
+                            <th scope="col text-center">AB+</th>
+                            <th scope="col text-center">AB-</th>
+                            <th scope="col text-center">O+</th>
+                            <th scope="col text-center ">O-</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                    
+                                <tr>
+                                
+                                    <th scope="col ">
+                                      <input placeholder="A+"   name="A+"  class="input-field " />
+                                     </th>
+                                    <th scope="col ">
+                                      <input placeholder="A-"  name="A-"  class="input-field " />
+                                     </th>
+                                    <th scope="col ">
+                                      <input placeholder="B+"  name="B+" class="input-field " />
+                                     </th>
+                                    <th scope="col ">
+                                      <input placeholder="B-"  name="B-"  class="input-field " />
+                                     </th>
+                                    <th scope="col ">
+                                      <input placeholder="AB+"  name="AB+"  class="input-field " />
+                                     </th>
+                                    <th scope="col ">
+                                      <input placeholder="AB-"  name="AB-"  class="input-field " />
+                                     </th>
+                                     <th scope="col ">
+                                      <input placeholder="O+"  name="O+"  class="input-field " />
+                                     </th>
+                                    <th scope="col ">
+                                      <input placeholder="O-"  name="O-"  class="input-field " />
+                                     </th>
+                                  
+                            </tr>
+                        
+                          </tbody>
+                        </table>
+                    </div>
+                   <br>
+                   <div style="display: none;">
+                     
+                     <input type="text" name="name" value=<%= data.name %> >
+                     <input type="text" name="email" value=<%= data.email %> >
+                     <input type="text" name="role" value=<%= user.role %> >
+         
+                   </div>
+                    <p  class="col-lg-2 d-flex mt-2 align-items-center justify-content-end  ">
+
+                      Expected Date
+                    </p>
+                    <div class="col-lg-4 mt-2 wrap m-2  d-flex align-items-center">
+                        <input type="date" required placeholder="Expected day" name="date"/>
+                    </div>
+
+                    <button type="submit " class="btn ml-auto btn-outline-light mr-1 m-2 pl-4 pr-4">
+                      Request
+                    </button>
+                  </div>
+              </form>
+           <%   }else if(user.role === "bank") { %>
+            <div class="row front-p pb-2 mt-4 pt-5 pr-3 pl-3 mb-5">
+            <div class="col-12">
+                <h4>Blood Request From hospitals</h4>
+         </div>
+         <%if(request.name){%>
+         <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">From</th>
+              <th scope="col text-center">A+</th>
+              <th scope="col text-center">A-</th>
+              <th scope="col text-center">B+</th>
+              <th scope="col text-center ">B-</th>
+              <th scope="col text-center">AB+</th>
+              <th scope="col text-center">AB-</th>
+              <th scope="col text-center">O+</th>
+              <th scope="col text-center ">O-</th>
+              <th scope="col text-center "> Date   </th>
+              <th scope="col text-center ">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+                  <tr>
+                      <th scope="col ">
+                        <%=request.name %>
+                        <%=request.email %>
+                      </th>
+                      <th scope="col ">
+                        <input placeholder="A+" readonly name="A+" value='<%=request['A+'] %>' class="input-field " />
+                       </th>
+                      <th scope="col ">
+                        <input placeholder="A-" readonly name="A-" value='<%=request['A-'] %>' class="input-field " />
+                       </th>
+                      <th scope="col ">
+                        <input placeholder="B+" readonly name="B+" value='<%=request['B+'] %>' class="input-field " />
+                       </th>
+                      <th scope="col ">
+                        <input placeholder="B-" readonly name="B-" value='<%=request['B-'] %>' class="input-field " />
+                       </th>
+                      <th scope="col ">
+                        <input placeholder="AB+" readonly name="AB+" value='<%=request['AB+'] %>' class="input-field " />
+                       </th>
+                      <th scope="col ">
+                        <input placeholder="AB-" readonly name="AB-" value='<%=request['AB-'] %>' class="input-field " />
+                       </th>
+                       <th scope="col ">
+                        <input placeholder="O+" readonly  name="O+" value='<%=request['O+'] %>' class="input-field " />
+                       </th>
+                      <th scope="col ">
+                        <input placeholder="O-"  name="O-" readonly value='<%=request['O-'] %>' class="input-field " />
+                       </th>
+                      <th scope="col " class="pl-0 pr-0">
+                        <% var date = request.date%> 
+                        <% if(date){ %> 
+                         <% date = date.toLocaleDateString()} else { %>
+                           <% date = "" %>
+                         <% } %>
+                        <input placeholder="O-" type="datetime" readonly  name="date" value='<%=date %>' class="input-field " />
+                       </th>
+                       <th>
+                        <a  class="btn  btn-outline-light font-small " href="/up/request/checkout/<%=request.email %>/<%= data.email %>">
+                          Checkout
+                        </a>
+                        
+                       </th>
+                    
+              </tr>
+              
+              
+            </tbody>
+         <% }else {%>
+              <h6 class="ml-5 mb-3">No Request</h6>
+          <%}%>
+          </table>
+              </div>
+              <% } %>
+              <div class="row front-p pb-2 mt-4 pt-5 pr-3 pl-3 mb-5">
+                <div class="row d-flex justify-content-between col-12" >
+
+                  <h4>Campaign Details</h4>
+                  <% if(campaign[0]){ %> 
+                  <% }else{ %> 
+                  <a  class="btn    btn-outline-light  " href="/up/campaign/<%= data.email %>">
+                    Add New Campaign
+                  </a>
+                  <% } %> 
+                </div>
+                <div class="container   ">
+                  <% if(campaign[0]){ %> 
+                <% for(var i = 0 ; i< campaign.length; i++){ %>
+                    <div class="row mt-3">
+                      <div class="col-lg-9">
+                        <% var dateS = campaign[i].dateS%> 
+                        <% var dateE = campaign[i].dateE%> 
+                        <% var timeS = campaign[i].timeS%> 
+                        <% var timeE = campaign[i].timeE%> 
+                        <% if(dateS){ %> 
+                         <% dateS = new Date(dateS).toLocaleDateString() %>
+                         <% dateE = new Date(dateE).toLocaleDateString() %>
+                         <% timeS = timeS.slice(0,5) %>
+                         <% timeE = timeE.slice(0,5) %>
+                        
+                       <% }else { %>
+                           <% dateS = "" %>
+                         <% } %>
+
+                        <h4 >
+                          <%= campaign[i].name  %> 
+                          <br>
+                        </h4>
+                        <p class="mb-0">
+                          <%= campaign[i].email  %> 
+                        </p>
+                        <p class="mb-0">
+                          Start Date: <%= dateS  %> -  End Date: <%= dateE  %> 
+                        </p>
+                      
+                        <p class="mb-0">
+                          Start Time:
+                          <%= timeS  %>  - End Time:
+                          <%= timeE  %> 
+                        </p>
+                        <p class="mb-0">
+                          <%= campaign[i].address  %> 
+                        </p>
+                        <p >
+                          <%= campaign[i].descp  %> 
+                        </p>
+                     
+                      </div>
+                      <div class="col-lg-2 d-flex align-items-center justify-content-around">
+                        <a  class="btn   btn-outline-light  " href="/up/edit/campaign/<%= data.email %>">
+                         Edit
+                        </a>
+                        <a  class="btn    btn-outline-light  " href="/up/delete/campaign/<%= data.email %>">
+                         Delete
+                        </a>
+                      </div>
+                    </div>
+                  <% }}else{ %> 
+                    <div class="row mt-3">
+                      <h6 class="ml-4">No Active Campaign</h6>
+                    </div>
+                    <% } %> 
+                </div>
+              </div>
+              <div class="row front-p pb-2 mt-5 p-3 mb-5">
+                <h4>Requests: </h4>
+                <div class="container">
+                  <div class="row">
+    
+                    <%if(!find[0]){%>
+                      No Requests 
+                   <% } else {%>
+    
+            
+                      <% for(var i =0 ; i<find.length; i++){ %> 
+                              <div class="col-lg-6">
+                                  <div class="row">
+      
+                              
+                                  <div class="col-9 m-0">
+                                      <div class="row">
+                                          <div class="col-4 d-flex justify-content-end">
+                                              <span class="dull">
+                                                  Name:
+                                                 </span> 
+                                          </div>
+                                          <div class="col-8">
+                                              <p >
+                                                  <%= find[i].name %>
+                                                </p> 
+                                          </div>
+                                      </div>
+                                      <div class="row">
+                                          <div class="col-4 d-flex justify-content-end">
+                                              <span class="dull">
+                                                  Email:
+                                                 </span> 
+                                          </div>
+                                          <div class="col-8">
+                                              <p >
+                                                  <%= find[i].email %>
+                                                </p> 
+                                          </div>
+                                      </div>
+                                      <div class="row">
+                                          <div class="col-4 d-flex justify-content-end">
+                                              <span class="dull">
+                                                  Phone:
+                                                 </span> 
+                                          </div>
+                                          <div class="col-8">
+                                              <p >
+                                                  <%= find[i].phone %>
+                                                </p> 
+                                          </div>
+                                      </div>
+                                      <div class="row">
+                                          <div class="col-4 d-flex justify-content-end">
+                                              <span class="dull">
+                                                  Blood Group:
+                                                 </span> 
+                                          </div>
+                                          <div class="col-8">
+                                              <p >
+                                                  <%= find[i].blood %>
+                                                </p> 
+                                          </div>
+                                      </div>
+                                      
+                            
+                          </div>
+                          <div class="col-3 d-flex align-items-center  ">
+                              <a  href="/delfind/finddata/<%=find[i].email%>" class="btn btn-outline-light mr-1 m-2 pl-4 pr-4">Responsed (delete)</a>
+                          </div>
+                      </div>
+                          </div>
+                              <% } %> 
+                 
+                    <% } %> 
+                  </div>
+                </div>
+              </div>
+              </div>
+
+
+</body>
+</html>

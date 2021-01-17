@@ -1,0 +1,66 @@
+.nav-css {
+    background:#E06266;
+    backdrop-filter: blur(30px);
+    color: aliceblue;
+}
+
+.front-p {
+    background: rgba(66, 66, 66, 0.2);
+    border-radius: 10px;
+    backdrop-filter: blur(30px);
+    box-shadow: 10px 10px 30px rgba(160, 160, 160, 0.1);
+}
+body {
+
+    width: 100%;
+    height: 100%;
+    background-color:#273036;
+    background-image: linear-gradient(360deg, #273036 10%, #D62E33 100%);
+    opacity: 0.9;
+    color: aliceblue !important;
+}
+
+.table {
+    color: aliceblue !important;
+}
+
+.table thead th {
+    border-bottom: 1px solid #dee2e6;
+}
+.icon-edit {
+    font-size: 20px;
+    cursor: pointer;
+    color: aliceblue;
+    transition: all .2s ease-in;
+}
+
+.icon-edit:hover {
+    color: aliceblue;
+    text-decoration: none;
+    transform: rotate(-20deg);
+}
+.icon-view {
+    font-size: 20px;
+    cursor: pointer;
+    color: aliceblue;
+    transition: all .2s ease-in;
+}
+
+.icon-view:hover {
+    color: aliceblue;
+    text-decoration: none;
+    transform: scale(1.1);
+}
+.icon-delete {
+    font-size: 20px;
+    cursor: pointer;
+    color: aliceblue;
+    transition: all .2s ease-in;
+}
+
+.icon-delete:hover {
+    color: aliceblue;
+    text-decoration: none;
+    transform: rotate(20deg);
+}
+

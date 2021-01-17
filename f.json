@@ -1,0 +1,184 @@
+{
+  "d": [
+    {
+      "__type": "AjaxControlToolkit.CascadingDropDownNameValue",
+      "name": "Bagalkot",
+      "value": "00090000-0000-0000-0000-000000000001",
+      "isDefaultValue": false
+    },
+    {
+      "__type": "AjaxControlToolkit.CascadingDropDownNameValue",
+      "name": "Ballari (Bellary)",
+      "value": "00090000-0000-0000-0000-000000000002",
+      "isDefaultValue": false
+    },
+    {
+      "__type": "AjaxControlToolkit.CascadingDropDownNameValue",
+      "name": "Belagavi (Belgaum)",
+      "value": "00090000-0000-0000-0000-000000000003",
+      "isDefaultValue": false
+    },
+    {
+      "__type": "AjaxControlToolkit.CascadingDropDownNameValue",
+      "name": "Bengaluru (Bangalore) Rural",
+      "value": "00090000-0000-0000-0000-000000000004",
+      "isDefaultValue": false
+    },
+    {
+      "__type": "AjaxControlToolkit.CascadingDropDownNameValue",
+      "name": "Bengaluru (Bangalore) Urban",
+      "value": "00090000-0000-0000-0000-000000000005",
+      "isDefaultValue": false
+    },
+    {
+      "__type": "AjaxControlToolkit.CascadingDropDownNameValue",
+      "name": "Bidar",
+      "value": "00090000-0000-0000-0000-000000000006",
+      "isDefaultValue": false
+    },
+    {
+      "__type": "AjaxControlToolkit.CascadingDropDownNameValue",
+      "name": "Chamarajanagar",
+      "value": "00090000-0000-0000-0000-000000000007",
+      "isDefaultValue": false
+    },
+    {
+      "__type": "AjaxControlToolkit.CascadingDropDownNameValue",
+      "name": "Chikballapur",
+      "value": "00090000-0000-0000-0000-000000000008",
+      "isDefaultValue": false
+    },
+    {
+      "__type": "AjaxControlToolkit.CascadingDropDownNameValue",
+      "name": "Chikkamagaluru (Chikmagalur)",
+      "value": "00090000-0000-0000-0000-000000000009",
+      "isDefaultValue": false
+    },
+    {
+      "__type": "AjaxControlToolkit.CascadingDropDownNameValue",
+      "name": "Chitradurga",
+      "value": "00090000-0000-0000-0000-000000000010",
+      "isDefaultValue": false
+    },
+    {
+      "__type": "AjaxControlToolkit.CascadingDropDownNameValue",
+      "name": "Dakshina Kannada",
+      "value": "00090000-0000-0000-0000-000000000011",
+      "isDefaultValue": false
+    },
+    {
+      "__type": "AjaxControlToolkit.CascadingDropDownNameValue",
+      "name": "Davangere",
+      "value": "00090000-0000-0000-0000-000000000012",
+      "isDefaultValue": false
+    },
+    {
+      "__type": "AjaxControlToolkit.CascadingDropDownNameValue",
+      "name": "Dharwad",
+      "value": "00090000-0000-0000-0000-000000000013",
+      "isDefaultValue": false
+    },
+    {
+      "__type": "AjaxControlToolkit.CascadingDropDownNameValue",
+      "name": "Gadag",
+      "value": "00090000-0000-0000-0000-000000000014",
+      "isDefaultValue": false
+    },
+    {
+      "__type": "AjaxControlToolkit.CascadingDropDownNameValue",
+      "name": "Hassan",
+      "value": "00090000-0000-0000-0000-000000000015",
+      "isDefaultValue": false
+    },
+    {
+      "__type": "AjaxControlToolkit.CascadingDropDownNameValue",
+      "name": "Haveri",
+      "value": "00090000-0000-0000-0000-000000000016",
+      "isDefaultValue": false
+    },
+    {
+      "__type": "AjaxControlToolkit.CascadingDropDownNameValue",
+      "name": "Kalaburagi (Gulbarga)",
+      "value": "00090000-0000-0000-0000-000000000017",
+      "isDefaultValue": false
+    },
+    {
+      "__type": "AjaxControlToolkit.CascadingDropDownNameValue",
+      "name": "Kodagu",
+      "value": "00090000-0000-0000-0000-000000000018",
+      "isDefaultValue": false
+    },
+    {
+      "__type": "AjaxControlToolkit.CascadingDropDownNameValue",
+      "name": "Kolar",
+      "value": "00090000-0000-0000-0000-000000000019",
+      "isDefaultValue": false
+    },
+    {
+      "__type": "AjaxControlToolkit.CascadingDropDownNameValue",
+      "name": "Koppal",
+      "value": "00090000-0000-0000-0000-000000000020",
+      "isDefaultValue": false
+    },
+    {
+      "__type": "AjaxControlToolkit.CascadingDropDownNameValue",
+      "name": "Mandya",
+      "value": "00090000-0000-0000-0000-000000000021",
+      "isDefaultValue": false
+    },
+    {
+      "__type": "AjaxControlToolkit.CascadingDropDownNameValue",
+      "name": "Mysuru (Mysore)",
+      "value": "00090000-0000-0000-0000-000000000022",
+      "isDefaultValue": false
+    },
+    {
+      "__type": "AjaxControlToolkit.CascadingDropDownNameValue",
+      "name": "Raichur",
+      "value": "00090000-0000-0000-0000-000000000023",
+      "isDefaultValue": false
+    },
+    {
+      "__type": "AjaxControlToolkit.CascadingDropDownNameValue",
+      "name": "Ramanagara",
+      "value": "00090000-0000-0000-0000-000000000024",
+      "isDefaultValue": false
+    },
+    {
+      "__type": "AjaxControlToolkit.CascadingDropDownNameValue",
+      "name": "Shivamogga (Shimoga)",
+      "value": "00090000-0000-0000-0000-000000000025",
+      "isDefaultValue": false
+    },
+    {
+      "__type": "AjaxControlToolkit.CascadingDropDownNameValue",
+      "name": "Tumakuru (Tumkur)",
+      "value": "00090000-0000-0000-0000-000000000026",
+      "isDefaultValue": false
+    },
+    {
+      "__type": "AjaxControlToolkit.CascadingDropDownNameValue",
+      "name": "Udupi",
+      "value": "00090000-0000-0000-0000-000000000027",
+      "isDefaultValue": false
+    },
+    {
+      "__type": "AjaxControlToolkit.CascadingDropDownNameValue",
+      "name": "Uttara Kannada (Karwar)",
+      "value": "00090000-0000-0000-0000-000000000028",
+      "isDefaultValue": false
+    },
+    {
+      "__type": "AjaxControlToolkit.CascadingDropDownNameValue",
+      "name": "Vijayapura (Bijapur)",
+      "value": "00090000-0000-0000-0000-000000000029",
+      "isDefaultValue": false
+    },
+    {
+      "__type": "AjaxControlToolkit.CascadingDropDownNameValue",
+      "name": "Yadgir",
+      "value": "00090000-0000-0000-0000-000000000030",
+      "isDefaultValue": false
+    }
+  ]
+}
