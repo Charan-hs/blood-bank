@@ -1,6 +1,7 @@
 const bodyParser = require("body-parser");
 const express = require("express");
 const app = express();
+var cors = require('cors')
 const blood = require("./blood.json");
 const db = require("./db");
 const jwt = require("jsonwebtoken");
@@ -8,6 +9,7 @@ const cookieParser = require("cookie-parser");
 // const { query } = require("./db");
 // const { request } = require("express");
 
+app.use(cors())
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/public"));
