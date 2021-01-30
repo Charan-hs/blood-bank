@@ -1,17 +1,24 @@
 const bodyParser = require("body-parser");
 const express = require("express");
 const app = express();
-var cors = require('cors')
+var cors = require("cors");
 const blood = require("./blood.json");
 const db = require("./db");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
+const bcrypt = require("bcrypt");
+
 // const { query } = require("./db");
 // const { request } = require("express");
 
-app.use(cors())
+app.use(cors());
+
 app.set("view engine", "ejs");
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
 app.use(express.static(__dirname + "/public"));
 app.use(cookieParser());
 
@@ -28,22 +35,20 @@ app.get("/", (req, res) => {
     verifyed = jwt.verify(token, "123");
     console.log(verifyed.id);
   }
-const q = "SELECT * FROM campaign "
-db.query(q,(err,result) => {
-  if(err){
-    console.log(err)
-    res.redirect('/')
-  }else {
-    console.log(result)
-    res.render("home", {
-      blood1: blood.blood,
-      user: verifyed.id,
-      campaign:Object.values(
-        JSON.parse(JSON.stringify(result))) || ""
-    });
-  }
-})
-  
+  const q = "SELECT * FROM campaign ";
+  db.query(q, (err, result) => {
+    if (err) {
+      console.log(err);
+      res.redirect("/");
+    } else {
+      console.log(result);
+      res.render("home", {
+        blood1: blood.blood,
+        user: verifyed.id,
+        campaign: Object.values(JSON.parse(JSON.stringify(result))) || "",
+      });
+    }
+  });
 });
 
 app.post("/", (req, res) => {
@@ -52,40 +57,73 @@ app.post("/", (req, res) => {
 });
 
 app.get("/login", (req, res) => {
-  res.render("login", { message: "" });
+  res.render("login", {
+    message: "",
+  });
 });
 
-app.post("/login", (req, res) => {
+app.post("/login", async (req, res) => {
   console.log(req.body);
   const { email, password } = req.body;
   if (!email || !password) {
-    return res.render("login", { message: "All feilds are requied" });
+    return res.render("login", {
+      message: "All feilds are requied",
+    });
   }
   db.query(
     "SELECT * FROM users WHERE email = ?",
     [email],
     async (err, result) => {
       if (err) {
-        return res.status(202).render("login", { message: "Error occured" });
+        return res.status(202).render("login", {
+          message: "Error occured",
+        });
       } else {
         if (result.length > 0) {
-          if (result[0].password === password) {
-            const id = {
-              name: result[0].name,
-              email: result[0].email,
-              role: result[0].role,
-            };
+          console.log(result[0].password, password);
+          await bcrypt.compare(
+            password,
+            result[0].password,
+            function (errb, resb) {
+              console.log(resb, "dfghjk login");
+              if (errb) {
+                console.log(errb);
+                return res.render("login", {
+                  message: "Email or Password didn't Match",
+                });
+              }
+              if (resb) {
+                const id = {
+                  name: result[0].name,
+                  email: result[0].email,
+                  role: result[0].role,
+                };
 
-            const token = jwt.sign({ id }, "123");
-            console.log("The Token is " + token);
+                const token = jwt.sign(
+                  {
+                    id,
+                  },
+                  "123"
+                );
+                console.log("The Token is " + token);
 
-            const cookieOptions = {
-              expires: new Date(Date.now() + 90 * 24 * 60 * 60),
-              httpsOnly: true,
-            };
-            res.cookie("jwt", token, cookieOptions);
-            return res.redirect("/");
-          }
+                const cookieOptions = {
+                  expires: new Date(Date.now() + 90 * 24 * 60 * 60),
+                  httpsOnly: true,
+                };
+                res.cookie("jwt", token, cookieOptions);
+                return res.redirect("/");
+              } else {
+                return res.render("login", {
+                  message: "Email or Password didn't Match0",
+                });
+              }
+            }
+          );
+        } else {
+          res.render("login", {
+            message: "NO Email found",
+          });
         }
       }
     }
@@ -99,7 +137,7 @@ app.get("/register", (req, res) => {
   });
 });
 
-app.post("/register", (req, res) => {
+app.post("/register", async (req, res) => {
   // console.log(req.body);
   const {
     name,
@@ -114,6 +152,9 @@ app.post("/register", (req, res) => {
     address,
   } = req.body;
   const bloodin = req.body["blood"] || "";
+  const decimal = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;
+  var hash = "";
+
   if (
     name.length === 0 ||
     email.length === 0 ||
@@ -141,13 +182,20 @@ app.post("/register", (req, res) => {
   }
   if (email) {
     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    const result = re.test(String(email).toLowerCase());
-    if (!result) {
+    const results = re.test(String(email).toLowerCase());
+    if (!results) {
       return res.render("register", {
         blood1: blood.blood,
         message: "Email is not valid",
       });
     }
+  }
+  
+  if(!(/^[A-Za-z\s]+$/.test(name))){
+    return res.render("register", {
+      blood1: blood.blood,
+      message: "Name is not valid",
+    });
   }
 
   if (phone.length != 10) {
@@ -183,88 +231,115 @@ app.post("/register", (req, res) => {
       message: "Pincode is not valid",
     });
   } else {
-    db.query(
-      "SELECT email FROM users WHERE email = ?",
-      [email],
-      (err, result) => {
+    if (decimal.test(password)) {
+      db.query(
+        "SELECT email FROM users WHERE email = ?",
+        [email],
+        (err6, result6) => {
+          if (err6) {
+            console.log(err);
+          }
+          if (result6.length > 0) {
+            return res.render("register", {
+              blood1: blood.blood,
+              message: "Email is already registered please login",
+            });
+          }
+        }
+      );
+      await bcrypt.hash(password, 10, async (err, hash1) => {
         if (err) {
           console.log(err);
-        }
-        if (result.length > 0) {
-          return res.render("register", {
-            blood1: blood.blood,
-            message: "Email is already registered please login",
-          });
-        }
-      }
-    );
-    db.query(
-      "INSERT INTO users SET ?",
-      { email: email, password: password, role: "donar", name: name },
-      async (err, results) => {
-        if (err) {
-          console.log("user error",err);
+          return res.redirect("/");
         } else {
-          // console.log(results);
-          console.log(results);
-          const u = await db.query(
-            "INSERT INTO donar SET ?",
+          hash = hash1;
+          console.log(hash);
+
+          db.query(
+            "INSERT INTO users SET ?",
             {
-              name: name,
               email: email,
-              age: age,
-              gender: gender,
-              weight: weight,
-              blood: bloodin,
-              phone: phone,
-              pincode: pincode,
-              address: address,
+              password: hash,
+              role: "donar",
+              name: name,
             },
-            (err1, results1) => {
-              if ("errpr ",
-                err1) {
-                console.log(err1);
-                db.query(
-                  "DELETE FROM users WHERE email = ?",
-                  [email],
-                  (e, r) => {
-                    if (e) {
-                      console.log(e);
+            async (err3, results) => {
+              if (err3) {
+                console.log("user error", err3);
+              } else {
+                // console.log(results);
+                console.log(results);
+                const u = await db.query(
+                  "INSERT INTO donar SET ?",
+                  {
+                    name: name,
+                    email: email,
+                    age: age,
+                    gender: gender,
+                    weight: weight,
+                    blood: bloodin,
+                    phone: phone,
+                    pincode: pincode,
+                    address: address,
+                  },
+                  (err1, results1) => {
+                    if (("errpr ", err1)) {
+                      console.log(err1);
+                      db.query(
+                        "DELETE FROM users WHERE email = ?",
+                        [email],
+                        (e, r) => {
+                          if (e) {
+                            console.log(e);
+                          } else {
+                            // console.log(r)
+                          }
+                        }
+                      );
                     } else {
-                      // console.log(r)
+                      // console.log(results1);
+                      // const token = jwt.sign(id)
+                      const id = {
+                        name,
+                        email,
+                        role: "donar",
+                      };
+
+                      const token = jwt.sign(
+                        {
+                          id,
+                        },
+                        "123"
+                      );
+                      console.log("The Token is " + token);
+
+                      const cookieOptions = {
+                        expires: new Date(Date.now() + 90 * 24 * 60 * 60),
+                        httpsOnly: true,
+                      };
+
+                      res.cookie("jwt", token, cookieOptions);
+                      return res.redirect("/");
+
+                      // return res.render("register", {
+                      //   blood1: blood.blood,
+                      //   message: "Registed ",
+                      // });
                     }
                   }
                 );
-              } else {
-                // console.log(results1);
-                // const token = jwt.sign(id)
-                const id = {
-                  name,
-                  email,
-                  role: "donar",
-                };
-
-                const token = jwt.sign({ id }, "123");
-                console.log("The Token is " + token);
-
-                const cookieOptions = {
-                  expires: new Date(Date.now() + 90 * 24 * 60 * 60),
-                  httpsOnly: true,
-                };
-
-                res.cookie("jwt", token, cookieOptions);
-                return res.redirect("/");
-
-                // return res.render("register", {
-                //   blood1: blood.blood,
-                //   message: "Registed ",
-                // });
               }
             }
           );
         }
-      }
-    );
+      });
+    } else {
+      return res.render("register", {
+        blood1: blood.blood,
+        message:
+          "password between 8 to 15 characters which contain at least one lowercase letter, one uppercase letter, one numeric digit, and one special character",
+      });
+    }
   }
 });
 
@@ -292,7 +367,12 @@ app.get("/profile", async (req, res) => {
         " WHERE email = ?; SELECT * FROM reserve WHERE email = ?;SELECT * FROM request WHERE role = 'hospital';SELECT * FROM campaign WHERE email = ?;SELECT * FROM find WHERE email = ?";
       await db.query(
         q,
-        [verifyed.id.email, verifyed.id.email,verifyed.id.email,verifyed.id.email],
+        [
+          verifyed.id.email,
+          verifyed.id.email,
+          verifyed.id.email,
+          verifyed.id.email,
+        ],
         async (err1, results1) => {
           if (err1) {
             console.log(err1);
@@ -312,14 +392,14 @@ app.get("/profile", async (req, res) => {
               };
             }
             if (verifyed.id.role === "donar") {
-              console.log(results1[4])
+              console.log(results1[4]);
               return res.render("profile", {
                 user: verifyed.id,
                 data: results1[0][0],
-                find:results1[4]
+                find: results1[4],
               });
             } else if (verifyed.id.role === "superadmin") {
-              const statement = "SELECT * FROM bank; SELECT * FROM hospital;";
+              const statement = "SELECT * FROM bank; SELECT * FROM hospital;SELECT * FROM donar";
               db.query(statement, (errs, resultS, feilds) => {
                 if (errs) {
                   console.log(errs);
@@ -330,12 +410,16 @@ app.get("/profile", async (req, res) => {
                   var foundHos = Object.values(
                     JSON.parse(JSON.stringify(resultS[1]))
                   );
+                  var foundDonar = Object.values(
+                    JSON.parse(JSON.stringify(resultS[2]))
+                  );
                   // console.log(foundHos,'\n',foundBank)
                   return res.render("superadmin", {
                     user: verifyed.id,
                     data: results1[0],
                     bank: foundBank,
                     hospital: foundHos,
+                    donar:foundDonar
                   });
                 }
               });
@@ -345,24 +429,25 @@ app.get("/profile", async (req, res) => {
                 user: verifyed.id,
                 data: results1[0][0],
                 reserve: reserve,
-                find:results1[4],
+                find: results1[4],
                 msg: "",
                 errmsg: "",
                 request: "",
-                campaign:Object.values(
-                  JSON.parse(JSON.stringify(results1[3]))) || ""
+                campaign:
+                  Object.values(JSON.parse(JSON.stringify(results1[3]))) || "",
               });
             } else if (verifyed.id.role === "bank") {
-              console.log(Object.values(
-                JSON.parse(JSON.stringify(results1[3]))));
+              console.log(
+                Object.values(JSON.parse(JSON.stringify(results1[3])))
+              );
               return res.render("hospital", {
                 user: verifyed.id,
                 data: results1[0][0] || "",
                 reserve: reserve || "",
                 request: results1[2][0] || "",
-                campaign:Object.values(
-                  JSON.parse(JSON.stringify(results1[3]))) || "",
-                  find:results1[4]
+                campaign:
+                  Object.values(JSON.parse(JSON.stringify(results1[3]))) || "",
+                find: results1[4],
               });
             }
           }
@@ -399,7 +484,7 @@ app.get("/edit/:path/:id", (req, res) => {
 
 app.post("/edit/:path/", (req, res) => {
   var { name, email, password, conPass, phone, pincode, address } = req.body;
-
+  const decimal = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;
   // if(req.params.path=== "hospital") {
   //   console.log("heyyy")
   //   return res.redirect('/')
@@ -409,6 +494,10 @@ app.post("/edit/:path/", (req, res) => {
     "path",
     path1
   );
+
+
+
+ 
   db.query(q, [email, email], async (err, result) => {
     if (err) {
       console.log("1", err);
@@ -422,6 +511,7 @@ app.post("/edit/:path/", (req, res) => {
           message: "Length must be 4 charecter long",
           bank: data,
           user: user,
+          path: path1,
         });
       }
       if (password != conPass) {
@@ -429,6 +519,7 @@ app.post("/edit/:path/", (req, res) => {
           message: "Password must be same",
           bank: data,
           user: user,
+          path: path1,
         });
       }
       if (phone.length != 10) {
@@ -436,6 +527,7 @@ app.post("/edit/:path/", (req, res) => {
           message: "Phone Number is not valid",
           bank: data,
           user: user,
+          path: path1,
         });
       }
       if (pincode.length != 6) {
@@ -443,6 +535,7 @@ app.post("/edit/:path/", (req, res) => {
           message: "Pincode is not valid",
           bank: data,
           user: user,
+          path: path1,
         });
       }
 
@@ -455,9 +548,15 @@ app.post("/edit/:path/", (req, res) => {
         "bank",
         path1 === "hospital" ? "hospital" : "bank"
       );
-      await db.query(
+      if (decimal.test(password)) {
+      await bcrypt.hash(password, 10, async (err, hash1) => {
+        if (err) {
+          console.log(err);
+          return res.redirect("/");
+        } else {
+       db.query(
         q1,
-        [password, email, name, phone, pincode, address, email],
+        [hash1, email, name, phone, pincode, address, email],
         (err1, result1) => {
           if (err1) {
             console.log("2", err);
@@ -469,8 +568,21 @@ app.post("/edit/:path/", (req, res) => {
           }
         }
       );
+        }
+      })
+    }
+    else {
+      return res.render("edit", {
+        bank: data,
+        user: user,
+        path: path1,
+        message:
+          "password between 8 to 15 characters which contain at least one lowercase letter, one uppercase letter, one numeric digit, and one special character",
+      });
+    }
     }
   });
+
 });
 
 app.get("/delete/:path/:id", (req, res) => {
@@ -501,7 +613,10 @@ app.get("/delete/:path/:id", (req, res) => {
 });
 
 app.get("/add/:path/", (req, res) => {
-  res.render("add", { message: "", path: req.params.path });
+  res.render("add", {
+    message: "",
+    path: req.params.path,
+  });
 });
 
 app.post("/add/:path/", (req, res) => {
@@ -574,7 +689,12 @@ app.post("/add/:path/", (req, res) => {
 
   db.query(
     q,
-    { email: email, password: password, role: req.params.path, name: name },
+    {
+      email: email,
+      password: password,
+      role: req.params.path,
+      name: name,
+    },
     (err, result) => {
       if (err) {
         console.log(err);
@@ -690,7 +810,7 @@ app.get("/up/request/checkout/:id/:email", (req, res) => {
   const q =
     "SELECT * FROM request WHERE email = ?; SELECT * FROM reserve where email = ?; SELECT * FROM reserve WHERE email = ?";
 
-  db.query(q, [email, reqEmail,email], (err, result) => {
+  db.query(q, [email, reqEmail, email], (err, result) => {
     if (err) {
       console.log(err);
       res.redirect("/profile");
@@ -702,27 +822,26 @@ app.get("/up/request/checkout/:id/:email", (req, res) => {
       var che = false;
       keys.map((val) => {
         if (val != "email") {
-          let h = save[val]
+          let h = save[val];
           save[val] = save[val] - check[val] < 0 ? 0 : save[val] - check[val];
-          pre[val] = pre[val] + (((h - check[val]) < 0) ? h : check[val]);
+          pre[val] = pre[val] + (h - check[val] < 0 ? h : check[val]);
           check[val] = h - check[val] < 0 ? check[val] - h : 0;
         }
       });
-      for(var i=0;i<keys.length;i++){
-        if(keys[i] !='email'){
-          if(check[keys[i]] > 0){
+      for (var i = 0; i < keys.length; i++) {
+        if (keys[i] != "email") {
+          if (check[keys[i]] > 0) {
             che = true;
             break;
           }
         }
       }
-    
 
       if (!che) {
         const s =
           "UPDATE reserve SET ? WHERE email = ? ;DELETE FROM request WHERE email = ? ;UPDATE reserve SET ? WHERE email = ?";
 
-        db.query(s, [save, reqEmail, email,pre,email], (err, resu) => {
+        db.query(s, [save, reqEmail, email, pre, email], (err, resu) => {
           if (err) {
             console.log(err);
             res.redirect("/profile");
@@ -733,7 +852,7 @@ app.get("/up/request/checkout/:id/:email", (req, res) => {
       } else {
         const s =
           "UPDATE reserve SET ? WHERE email = ? ;UPDATE request SET ? WHERE email = ?;UPDATE reserve SET ? WHERE email = ? ";
-        db.query(s, [save, reqEmail, check, email,pre,email], (err, resu) => {
+        db.query(s, [save, reqEmail, check, email, pre, email], (err, resu) => {
           if (err) {
             console.log(err);
             res.redirect("/profile");
@@ -746,115 +865,232 @@ app.get("/up/request/checkout/:id/:email", (req, res) => {
   });
 });
 
+app.get("/up/campaign/:id", (req, res) => {
+  const email = req.params.id;
+  res.render("campaign", {
+    email: email,
+    message: "",
+  });
+});
 
-app.get('/up/campaign/:id' , (req,res) => {
-  const email = req.params.id
-  res.render('campaign',{email:email,message:""})
-})
-
-app.post('/up/campaign',(req,res) => {
-  const data = req.body
-  q= 'INSERT INTO campaign SET ?'
-  db.query(q,[data],(err,result) => {
-    if(err){
-      console.log(err)
-      res.redirect('/profile')
-    }else{
-      console.log(result)
-      res.redirect('/profile')
+app.post("/up/campaign", (req, res) => {
+  const data = req.body;
+  q = "INSERT INTO campaign SET ?";
+  db.query(q, [data], (err, result) => {
+    if (err) {
+      console.log(err);
+      res.redirect("/profile");
+    } else {
+      console.log(result);
+      res.redirect("/profile");
     }
-  })
-  
-})
+  });
+});
 
-app.get('/up/edit/campaign/:id',(req,res) => {
-        const q = "SELECT * FROM campaign WHERE email = ?"
-        db.query(q,[req.params.id],(err,result) => {
-          if(err){
-            console.log(err)
-            res.redirect('/profile')
-          }else{
-            res.render('editCampaign',{email:req.params.id,message:"",result:result[0]})
+app.get("/up/edit/campaign/:id", (req, res) => {
+  const q = "SELECT * FROM campaign WHERE email = ?";
+  db.query(q, [req.params.id], (err, result) => {
+    if (err) {
+      console.log(err);
+      res.redirect("/profile");
+    } else {
+      res.render("editCampaign", {
+        email: req.params.id,
+        message: "",
+        result: result[0],
+      });
+    }
+  });
+});
+
+app.post("/up/edit/campaign", (req, res) => {
+  const q = "UPDATE campaign SET ?";
+  db.query(q, [req.body], (err, request) => {
+    if (err) {
+      console.log(err);
+      res.redirect("/profile");
+    } else {
+      res.redirect("/profile");
+    }
+  });
+});
+
+app.get("/up/delete/campaign/:id", (req, res) => {
+  const email = req.params.id;
+  const q = "DELETE FROM campaign WHERE email= ?";
+  db.query(q, [email], (err, result) => {
+    if (err) {
+      console.log(err);
+      res.redirect("/profile");
+    } else {
+      res.redirect("/profile");
+    }
+  });
+});
+
+app.post("/find", (req, res) => {
+  const { blood, pincode, name, phone } = req.body;
+  const q =
+    "SELECT * FROM donar WHERE pincode = ? AND blood = ? ; SELECT * FROM  hospital WHERE pincode = ? ; SELECT * FROM  bank WHERE pincode = ? ;";
+  db.query(q, [pincode, blood, pincode, pincode], (err, result) => {
+    if (err) {
+      console.log(err);
+      res.redirect("/");
+    } else {
+      const donar = result[0];
+
+      const hospital = result[1];
+      const bank = result[2];
+      res.render("find", {
+        name,
+        phone,
+        blood,
+        pincode,
+        donar: result[0],
+        hospital: result[1],
+        bank: result[2],
+      });
+    }
+  });
+});
+
+app.get("/finddata/:name/:pincode/:blood/:phone/:email", (req, res) => {
+  console.log(req.params);
+  const q = "INSERT INTO find SET ?";
+  db.query(q, [req.params], (err, result) => {
+    if (err) {
+      console.log(err);
+      res.redirect("/");
+    } else {
+      res.redirect("/");
+    }
+  });
+});
+
+app.get("/delfind/finddata/:email", (req, res) => {
+  const email = req.params.email;
+  const q = "DELETE FROM find WHERE email = ? ";
+  db.query(q, [email], (err, result) => {
+    if (err) {
+      console.log(err);
+      res.redirect("/");
+    } else {
+      res.redirect("/profile");
+    }
+  });
+});
+
+app.get("/forget", (req, res) => {
+  res.render("forget", {
+    message: "",
+  });
+});
+
+app.post("/forget", async (req, res) => {
+  const { email, cp, np, cnp } = req.body;
+  const q = "SELECT * FROM users WHERE email = ?";
+  var hash = "";
+  await bcrypt.hash(np, 10, async (erre, hash1) => {
+    if (erre) {
+      console.log(err);
+      return res.redirect("/");
+    } else {
+      hash = hash1;
+ 
+
+  db.query(q, [email], async (err, result) => {
+    if (err) {
+      console.log(err);
+      res.redirect("/");
+    } else {
+      console.log(result[0]);
+      if (np !== cnp) {
+        return res.render("forget", {
+          message: "Password Did't match",
+        });
+      }
+      console.log(result[0].password,hash, np,cp);
+      await bcrypt.compare(cp, result[0].password, (err, resu) => {
+        if (err) {
+          console.log(err);
+          return res.redirect("/");
+        } else {
+          console.log(resu)
+          if (resu) {
+            const decimal = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;
+            if (decimal.test(np)) {
+              const q1 = "UPDATE users SET password = ? WHERE email = ?;";
+                console.log(hash)
+              db.query(q1, [hash, email], (err1, resultt) => {
+                if (err1) {
+                  console.log(err);
+                  return res.redirect("/");
+                }
+                if (resultt.length > 0) {
+                  return res.redirect("/login");
+                } else {
+                  return res.redirect("/");
+                }
+              });
+            } else {
+              return res.render("forget", {
+                message:
+                  "password between 8 to 15 characters which contain at least one lowercase letter, one uppercase letter, one numeric digit, and one special character",
+              });
+            }
+          } else {
+            return res.render("forget", {
+              message: "Old Password Did't match",
+            });
           }
-        })
-})
-
-app.post('/up/edit/campaign',(req,res) => {
-  const q = "UPDATE campaign SET ?"
-  db.query(q,[req.body],(err,request)=> {
-    if(err){
-      console.log(err)
-      res.redirect('/profile')
-    }else{
-      res.redirect('/profile')
+        }
+      });
     }
-  })
-})
+  });
+}
+});
 
-app.get("/up/delete/campaign/:id",(req,res) => {
-  const email = req.params.id
-  const q  = "DELETE FROM campaign WHERE email= ?"
-  db.query(q,[email],(err,result) => {
-    if(err){
-      console.log(err)
-      res.redirect('/profile')
-    }else {
-      res.redirect('/profile')
-    }
-  })
-})
+  // return res.render("forget", {
+  //   message: "Email is Not yet register",
+  // });
+});
 
+app.get("/sidebar", (req, res) => {
+  return res.render("sidebar", {
+    message: "Email is Not yet register",
+  });
+});
 
-app.post('/find',(req,res) => {
-  const {blood,pincode,name,phone} = req.body
-  const q = "SELECT * FROM donar WHERE pincode = ? AND blood = ? ; SELECT * FROM  hospital WHERE pincode = ? ; SELECT * FROM  bank WHERE pincode = ? ;"
-  db.query(q,[pincode,blood,pincode,pincode],(err,result) => {
-    if(err){
-      console.log(err)
-      res.redirect('/')
+app.post('/contact/admin',(req,res) => {
 
-    }else {
-      const donar = result[0]
+    var q = "INSERT INTO message SET ? "
 
-      const hospital = result[1]
-      const bank = result[2]
-      res.render('find',{name,phone,
-        blood,pincode,donar:result[0],hospital:result[1],bank:result[2]
-      })
-      
-    }
-  })
-})
-
-app.get('/finddata/:name/:pincode/:blood/:phone/:email',(req,res) => {
-
-  console.log(req.params)
-  const q = "INSERT INTO find SET ?"
-  db.query(q,[req.params],(err,result) => {
-    if(err){
-      console.log(err)
-      res.redirect('/')
-    }else {
+    db.query(q,req.body,(err,result)=> {
+      if(err){
+        console.log(err)
         res.redirect('/')
-    }
-  })
+      }else {
+        res.redirect('/')
+      }
+    })
+
 })
 
-app.get('/delfind/finddata/:email',(req,res) => {
-  const email = req.params.email
-  const q = "DELETE FROM find WHERE email = ? "
-  db.query(q,[email],(err,result)=> {
+app.get('/contact/view',(req,res) => {
+  var q  = "SELECT * FROM message"
+  db.query(q,(err,result) => {
     if(err){
       console.log(err)
-      res.redirect('/')
+        res.redirect('/')
     }else {
-      res.redirect('/profile')
+      return res.render("messageView",{message:result})
     }
   })
 })
 
-app.get('',(req,res) => {
-  res.redirect('/')
-})
+app.get("*", (req, res) => {
+  res.redirect("/");
+});
+
 
 app.listen(process.env.PORT || 3000, () => console.log("server started "));

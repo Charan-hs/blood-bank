@@ -1,0 +1,19 @@
+
+
+<%-  include('header')  -%> 
+<link rel="stylesheet" href="/css/message.css">
+    <body>
+    <div class="container d-flex flex-column flex-md-row justify-content-around">
+        <% message.map((item,i) => {  %> 
+        <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+            <div class="card-header">Message <%= i+1  %> </div>
+            <div class="card-body">
+              <h5 class="card-title"> <%= item.email %> </h5>
+              <p class="card-text"><%= item.message %>.</p>
+            </div>
+          </div>
+       
+            <% }) %> 
+    </div>
+</body>
+</html>

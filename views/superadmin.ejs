@@ -1,13 +1,52 @@
 <%- include('header') -%> 
-<link rel="stylesheet" href="/css/superadmin.css">
 <body>
+    
+    
+    <%- include('sidebar'); -%>
+  
+    <link rel="stylesheet" href="/css/superadmin.css">
 
-    <%- include('nav'); -%>
-    <div class="container">
-        <div class="front-p mt-4   pb-0 pt-4 pr-4 pl-4 ">
+ <div class="container top-bar">
+    <div class="d-flex justify-content-around">
+     
+            <div class="box-data d-flex justify-content-center align-items-center flex-column ">
+               <h6>
+                Number of Hospital<br> Registered
+               </h6> 
+               <h4>
+
+                   <%= hospital.length %>
+               </h4>
+            </div>
+            <div class="box-data d-flex justify-content-center align-items-center flex-column ">
+               <h6>
+                Number of Blood Bank <br> Registered 
+               </h6> 
+               <h4>
+
+                   <%= bank.length %>
+               </h4>
+            </div>
+            <div class="box-data d-flex justify-content-center align-items-center flex-column ">
+               <h6>
+                Number of Donar <br>
+                Registered 
+               </h6> 
+               <h4>
+
+                   <%= donar.length %>
+               </h4>
+            </div>
+           
+      
+
+    </div>
+ </div>
+    <div class="container ">
+        <section id="hospital" class="front-p pt-4  pb-0  pr-4 pl-4 " style="margin-top: 5rem;">
 
         
-        <div class="row ">
+        <div class="row  ">
                 <h4>
                     List of Hospitals
                 </h4>
@@ -35,8 +74,8 @@
                         <td><%= val.phone %></td>
                         <td class="d-flex justify-content-around">
                             <a class="fa fa-eye icon-view" aria-hidden="true" href=<%="/view/hospital/"+val.email%>></a>
-                            <a class="fa fa-pencil icon-edit" aria-hidden="true" href=<%="/edit/hospital/"+val.email%>></a>
-                            <a class="fa fa-trash-o icon-delete" aria-hidden="true" href=<%="/delete/hospital/"+val.email%>></a>
+                            <a class="fas fa-pencil-alt icon-edit" aria-hidden="true" href=<%="/edit/hospital/"+val.email%>></a>
+                            <a class="fas fa-trash icon-delete" aria-hidden="true" href=<%="/delete/hospital/"+val.email%>></a>
                         </td>
                     </tr>
                    <% }) %>
@@ -44,8 +83,8 @@
                 </tbody>
               </table>
         </div>
-    </div>
-        <div class="front-p mt-4   pb-0 pt-4 pr-4 pl-4">
+    </section>
+        <section id="bank" class="front-p mt-4   pb-0 pt-4 pr-4 pl-4">
 
         
         <div class="row ">
@@ -63,8 +102,8 @@
                     <th scope="col">Sl.no</th>
                     <th scope="col">Blood Bank Name</th>
                     <th scope="col">Email</th>
-                    <th scope="col">Phone Number</th>
-                    <th scope="col">Address</th>
+                    <th scope="col" >Phone Number</th>
+                    <th scope="col " >Address</th>
                     <th scope="col text-center">Actions</th>
                   </tr>
                 </thead>
@@ -76,11 +115,11 @@
                         <td><%= val.name %></td>
                         <td><%= val.email %></td>
                         <td><%= val.phone %></td>
-                        <td><%= val.address %></td>
+                        <td ><%= val.address %></td>
                         <td class="d-flex justify-content-around">
                             <a class="fa fa-eye icon-view" aria-hidden="true" href=<%="/view/bank/"+val.email%>></a>
-                            <a class="fa fa-pencil icon-edit" aria-hidden="true" href=<%="/edit/bank/"+val.email%>></a>
-                            <a class="fa fa-trash-o icon-delete" aria-hidden="true" href=<%="/delete/bank/"+val.email%> ></a>
+                            <a class="fas fa-pencil-alt icon-edit" aria-hidden="true" href=<%="/edit/bank/"+val.email%>></a>
+                            <a class="fas fa-trash icon-delete" aria-hidden="true" href=<%="/delete/bank/"+val.email%> ></a>
                         </td>
                     </tr>
                    <% }) %>
@@ -89,7 +128,52 @@
                 </tbody>
               </table>
         </div>
-    </div>
+        </section>
+        <section id="donar" class="front-p mt-4   pb-0 pt-4 pr-4 pl-4">
+
+        
+        <div class="row ">
+                <h4>
+                    List of Donar
+                </h4>
+               
+        </div>
+        <div class="row mt-3">
+            <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">Sl.no</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Blood Type</th>
+                    <th scope="col">Email</th>
+                    <th scope="col" >Phone Number</th>
+                    <th scope="col " >Address</th>
+                    <th scope="col text-center">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  
+                    <% donar.forEach((val,i) => { %>
+                        <tr >
+                        <th scope="row">  <%= i+1 %></th>
+                        <td><%= val.name %></td>
+                        <td><%= val.blood %></td>
+                        <td><%= val.email %></td>
+                        <td><%= val.phone %></td>
+                        <td ><%= val.address %></td>
+                        <td class="d-flex justify-content-around">
+                            
+                            <a class="fas fa-trash icon-delete" aria-hidden="true" href=<%="/delete/donar/"+val.email%> ></a>
+                        </td>
+                    </tr>
+                   <% }) %>
+                
+              
+                </tbody>
+              </table>
+        </div>
+        </section>
         
     </div>
+
 </body>

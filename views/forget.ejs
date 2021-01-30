@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Forget Password</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+      integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+      integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="./css/login.css" />
+  </head>
+  <body>
+    <div class="card text-right" style="width: 18rem; height: auto">
+      <div class="card-header text-left">
+        <strong>Forget Password</strong>
+        <% if(message) { %>
+          <p class="error-css mb-0">
+            <%= message %>
+          </p>
+          <%} %>
+      </div>
+      <form action="/forget" method="POST">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">
+            <div class="in-con text-left">
+              <i class="fa fa-user-circle" aria-hidden="true"></i>
+              <input placeholder="Email" class="input-field" name="email" />
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="in-con text-left">
+              <i class="fa fa-lock" aria-hidden="true"></i>
+              <input
+                placeholder="Current Password"
+                type="password"
+                class="input-field"
+                name="cp"
+              />
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="in-con text-left">
+              <i class="fa fa-lock" aria-hidden="true"></i>
+              <input
+                placeholder="New Password"
+                type="password"
+                class="input-field"
+                name="np"
+              />
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="in-con text-left">
+              <i class="fa fa-lock" aria-hidden="true"></i>
+              <input
+                placeholder="Confirm New Password"
+                type="password"
+                class="input-field"
+                name="cnp"
+              />
+            </div>
+          </li>
+        </ul>
+
+
+
+        <button
+          type="submit "
+          class="btn btn-outline-light mr-1 m-2 pl-4 pr-4"
+
+        >
+          Change
+        </button>
+      </form>
+    </div>
+
+    <div class="con"></div>
+  </body>
+  <script
+    src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+    crossorigin="anonymous"
+  ></script>
+</html>

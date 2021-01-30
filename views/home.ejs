@@ -115,7 +115,7 @@
 
 
 <div class="container camp-con">
-  <% var im =  ["/img/11.jpg","/img/22.jpg","/img/33.jpg","/img/44.jpg","/img/55.jpg","/img/66.jpg"]%> 
+  <% var im =  ["/img/11.jpg","/img/22.jpg","/img/33.jpg","/img/44.jpg","/img/55.jpg","/img/11.jpg","/img/22.jpg","/img/33.jpg","/img/44.jpg","/img/55.jpg","/img/66.jpg"]%> 
   <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
     <ol class="carousel-indicators">
       <% if(campaign[0]){ %> 
@@ -217,11 +217,12 @@
                     
                     <div class="footer-left ">
                     <div class="subscribe-box ">
-                          <form>
+                          <form method="POST" action="/contact/admin">
                             
-                            <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+                            <input type="email" class="form-control" placeholder="Email" name="email">
+                            <input type="text" class="form-control"  placeholder="Message" name="message">
                           
-                            <button type="button" class="btn btn-outline-secondary my-3 ">Contact</button>
+                            <button type="submit" class="btn btn-outline-secondary my-3 ">Contact</button>
                           </form>
                     </div>
                     

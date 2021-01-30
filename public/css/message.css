@@ -1,0 +1,16 @@
+body {
+
+    width: 100vw;
+    height: 100vh;
+    background-color:#273036;
+    background-image: linear-gradient(360deg, #273036 10%, #D62E33 100%);
+    opacity: 0.9;
+ color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bg-red{
+    background: red;
+}

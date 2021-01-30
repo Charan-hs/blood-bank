@@ -64,3 +64,15 @@ body {
     transform: rotate(20deg);
 }
 
+.top-bar {
+    margin-top: 4rem;
+}
+.box-data {
+    background-color: #273036;
+    padding: 1rem;
+    border-radius: 5%;
+    box-shadow: 1px 1px 30px rgba(133, 133, 133, 0.616);
+  
+
+}
+
